@@ -1,0 +1,4 @@
+num2words==0.5.14
+ukrainian_word_stress==1.1.1
+ua_text_stressifier @ git+https://github.com/ArseniiBuhaiev/ua-text-stressifier.git
+tokenize_uk==0.2.0
