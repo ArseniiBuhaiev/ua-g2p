@@ -5,6 +5,7 @@ app.py
 app_webview.py
 static/
 templates/
+gui_data/
 launch.bat
 
 placeholders.csv
