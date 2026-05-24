@@ -57,13 +57,10 @@ class PreprocessorG2P():
         )
 
         return to_sound
-    
-    def handle_symbols(self, text: str) -> str:
-        return(text)
 
     def clean_text(self, text: str) -> str:
         clean = text.strip()
-        junk = ["*"]
+        junk = ["*№#^&`₴$@_"]
         for item in junk:
             clean = clean.replace(item, "")
         clean = self.handle_acronyms(clean).casefold()
@@ -93,7 +90,7 @@ class PreprocessorG2P():
         while i < n:
             w_i = tokens[i]
     
-            if w_i in ENCLITICS:
+            if w_i.replace("\u0301", "") in ENCLITICS and i != 0 and "|" not in tokens[i-1]:
                 i += 1
                 continue
             elif "|" in w_i:
@@ -101,11 +98,11 @@ class PreprocessorG2P():
                 handled.append(w_i)
                 continue
             
-            if i < n - 1 and tokens[i+1] in ENCLITICS:
+            if i < n - 1 and tokens[i+1].replace("\u0301", "") in ENCLITICS:
                 j = i + 1
                 concatenation = w_i
     
-                while j < n and tokens[j] in ENCLITICS:
+                while j < n and tokens[j].replace("\u0301", "") in ENCLITICS:
                     concatenation += tokens[j].replace("\u0301", "")
                     j += 1
     
