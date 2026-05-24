@@ -8,8 +8,8 @@ setup(
     author_email="bugaev3202@ukr.net",
     url="https://github.com/ArseniiBuhaiev/ua-g2p",
     license="CC BY-NC 4.0",
-    packagees=find_packages(),
-    python_requires=">3.8",
+    packages=find_packages(include=("ua_g2p", "ua_g2p.*")),
+    python_requires=">=3.9",
     install_requires=[
         "num2words==0.5.14",
         "ukrainian_word_stress==1.1.1",
