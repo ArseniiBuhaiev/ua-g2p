@@ -70,7 +70,7 @@ class PreprocessorG2P():
     
     def tokenize_words(self, text: str) -> list:
         punct_to_pauses = re.sub(
-            r"(\"|\s'|'\s|,|\(|\[|\)|\]|—|\s\-\s|\.|;|!|\?)",
+            r"(\"|\s'|'\s|,|\(|\[|\)|\]|—|\s\-\s|\.|\:|;|!|\?)",
             lambda x: PUNCTUATION_TO_PAUSES_MAP[x.group(1)],
             text
         )
