@@ -1,6 +1,6 @@
 import re
 from typing import Literal
-from ua_g2p.utils.config import RULES, POST_PROCESS, PHONEMES_MAP, IPA_MAP
+from ua_g2p.utils.config import RULES, POST_PROCESS, PHONEMES_MAP, TO_IPA
 from ua_g2p.preprocessor.preprocessor import PreprocessorG2P
 from ua_g2p.utils.text_utils import shift_stress
 
@@ -87,7 +87,7 @@ class ProcessorG2P():
 
         transcription = self._to_phones(text, accentor, brackets=False)
 
-        for rule, replacement in IPA_MAP.items():
+        for rule, replacement in TO_IPA.items():
             transcription = re.sub(rule, replacement, transcription)
 
         if brackets:

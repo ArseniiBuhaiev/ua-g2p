@@ -1,7 +1,10 @@
 import re
 from typing import Literal
-from ua_g2p.utils.config import LETTERS_NAME, PUNCTUATION_TO_PAUSES_MAP, ENCLITICS
+from english_g2p import G2P as en_g2p
+from ua_g2p.utils.config import LETTERS_NAME, PUNCTUATION_TO_PAUSES_MAP, ENCLITICS, IPA_TO_UA
 from ua_g2p.utils.text_utils import Stressifier, UkrainianStressifier, StressDisambiguator, count_syllables
+
+eng2p = en_g2p()
 
 class PreprocessorG2P():
     """
@@ -58,6 +61,21 @@ class PreprocessorG2P():
 
         return to_sound
 
+    def en_to_ua(self, text: str) -> str:
+        result = eng2p.convert(text)
+        for rule in IPA_TO_UA.keys():
+            result = re.sub(
+                rule,
+                IPA_TO_UA[rule],
+                result
+            )
+        result = re.sub(
+            r"(ˈ)([^аоуеиі]*)([аоуеиі]{1})",
+            r"\2\3" + "\u0301",
+            result
+        )
+        return result
+
     def clean_text(self, text: str) -> str:
         clean = text.strip()
         junk = ["*№#^&`₴$@_"]
@@ -75,6 +93,7 @@ class PreprocessorG2P():
             lambda x: PUNCTUATION_TO_PAUSES_MAP[x.group(1)],
             text
         )
+        text = re.sub(r"\s{2,}", r" ", text)
         token_list = text.split(" ")
         while "|" in token_list[-1]:
             token_list.pop(-1)
@@ -150,6 +169,7 @@ class PreprocessorG2P():
     def preprocess_text(self, text: str) -> list:
 
         text = self.clean_text(text)
+        text = self.en_to_ua(text)
         tokens = self.tokenize_words(text)
         result = self.handle_clitics(tokens)
 

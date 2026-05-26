@@ -1,6 +1,7 @@
 import re
 import regex
 from typing import Literal
+from string import ascii_letters
 from num2words import num2words
 from tokenize_uk import tokenize_words
 from ukrainian_word_stress import Stressifier
@@ -119,6 +120,8 @@ class StressDisambiguator():
 
         for pair in pairs:
             if not pair[0].isalpha() and len(pair[0]) == 1:
+                tokens.append(pair[0])
+            elif any(c in ascii_letters for c in pair[0]):
                 tokens.append(pair[0])
             else:
                 use_dict = pair[0].count("\u0301") == 1

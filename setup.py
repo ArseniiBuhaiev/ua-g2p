@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="ua-g2p",
-    version="1.0",
+    version="1.1",
     description="Rule-based Ukrainian G2P with text preprocessing.",
     author="Arsenii Buhaiev",
     author_email="bugaev3202@ukr.net",
