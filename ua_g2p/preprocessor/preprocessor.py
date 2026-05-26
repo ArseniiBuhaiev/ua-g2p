@@ -64,17 +64,17 @@ class PreprocessorG2P():
         for item in junk:
             clean = clean.replace(item, "")
         clean = self.handle_acronyms(clean).casefold()
+        clean = re.sub(r"(?<!\s)-(?!\s)", " ", clean)
         stressed = self.stressify_text(clean)
         
         return stressed.replace("+", "\u0301")
     
     def tokenize_words(self, text: str) -> list:
-        punct_to_pauses = re.sub(
+        text = re.sub(
             r"(\"|\s'|'\s|,|\(|\[|\)|\]|—|\s\-\s|\.|\:|;|!|\?)",
             lambda x: PUNCTUATION_TO_PAUSES_MAP[x.group(1)],
             text
         )
-        text = re.sub(r"(?<!\s)-(?!\s)", " ", punct_to_pauses)
         token_list = text.split(" ")
         while "|" in token_list[-1]:
             token_list.pop(-1)
