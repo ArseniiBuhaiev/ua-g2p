@@ -1,10 +1,10 @@
 import re
 from typing import Literal
-from english_g2p import G2P as en_g2p
 from ua_g2p.utils.config import LETTERS_NAME, PUNCTUATION_TO_PAUSES_MAP, ENCLITICS, IPA_TO_UA
-from ua_g2p.utils.text_utils import Stressifier, UkrainianStressifier, StressDisambiguator, count_syllables
-
-eng2p = en_g2p()
+from ua_g2p.utils.text_utils import Stressifier, UkrainianStressifier, StressDisambiguator
+from ua_g2p.utils.text_utils import count_syllables
+from ua_g2p.utils.text_utils import eng2p
+from ua_g2p.utils.text_utils import nlp, Morph, num_to_alpha
 
 class PreprocessorG2P():
     """
@@ -18,7 +18,7 @@ class PreprocessorG2P():
     """
     def __init__(self, accentor: Literal["dictionary", "transformer", "hybrid"] = "dictionary"):
         if accentor == "dictionary":
-            self.accentor = Stressifier(stress_symbol="\u0301")
+            self.accentor = Stressifier(stress_symbol="\u0301", nlp=nlp)
         elif accentor == "transformer":
             self.accentor = UkrainianStressifier()
         elif accentor == "hybrid":

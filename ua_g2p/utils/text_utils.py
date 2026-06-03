@@ -2,10 +2,24 @@ import re
 import regex
 from typing import Literal
 from string import ascii_letters
-from num2words import num2words
 from tokenize_uk import tokenize_words
 from ukrainian_word_stress import Stressifier
 from ua_text_stressifier import UkrainianStressifier
+from english_g2p import G2P as en_g2p
+from num2words import num2words as num_to_alpha
+import spacy
+from spacy.cli import download
+from pymorphy3 import MorphAnalyzer
+
+eng2p = en_g2p()
+
+try:
+    nlp = spacy.load("uk_core_news_lg", disable=["ner", "textcat"])
+except OSError:
+    download("uk_core_news_lg")
+    nlp = spacy.load("uk_core_news_lg", disable=["ner", "textcat"])
+
+Morph = MorphAnalyzer(lang="uk")
 
 def _reconstruct_text(tokens: list) -> str:
     text = " ".join(tokens)
@@ -93,7 +107,7 @@ class StressDisambiguator():
     by using transformer-based approach.
     """
     def __init__(self):
-        self.dict_method = Stressifier(stress_symbol="\u0301")
+        self.dict_method = Stressifier(stress_symbol="\u0301", nlp=nlp)
         self.transformer_method = UkrainianStressifier()
     
     def _get_options(self, text) -> list[tuple]:

@@ -1,4 +1,6 @@
 num2words==0.5.14
+pymorphy3==2.0.6
+pymorphy3_dicts_uk==2.4.1.1.1663094765
 ukrainian_word_stress @ https://github.com/ArseniiBuhaiev/ukrainian-word-stress
 ua_text_stressifier @ git+https://github.com/ArseniiBuhaiev/ua-text-stressifier.git
 tokenize_uk==0.2.0

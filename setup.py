@@ -11,9 +11,13 @@ setup(
     packages=find_packages(include=("ua_g2p", "ua_g2p.*")),
     python_requires=">=3.9",
     install_requires=[
-        "num2words==0.5.14",
-        "ukrainian_word_stress==1.1.1",
+        "ukrainian_word_stress @ https://github.com/ArseniiBuhaiev/ukrainian-word-stress",
         "ua_text_stressifier @ git+https://github.com/ArseniiBuhaiev/ua-text-stressifier.git",
-        "tokenize_uk==0.2.0"
+        "tokenize_uk==0.2.0",
+        "english_g2p @ git+https://github.com/ArseniiBuhaiev/english_g2p.git",
+        "num2words==0.5.14",
+        "pymorphy3==2.0.6",
+        "pymorphy3_dicts_uk==2.4.1.1.1663094765",
+        "spacy==3.8.14"
     ]
 )
